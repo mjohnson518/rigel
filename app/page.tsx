@@ -205,11 +205,11 @@ export default async function Page(props) {
       <DefaultActionBar />
 
       <Grid>
-        <ActionListItem icon={`⭢`} href="https://internet.dev" target="_blank">
-          Hire our studio to build your applications
+        <ActionListItem icon={`⭢`} href="https://c12.space" target="_blank">
+          Work with us
         </ActionListItem>
-        <ActionListItem icon={`⭢`} href="https://github.com/internet-development/www-sacred" target="_blank">
-          View the SRCL source code
+        <ActionListItem icon={`⭢`} href="https://github.com/mjohnson518/rigel" target="_blank">
+          View the source code
         </ActionListItem>
         <ActionListItem icon={`⭢`} href="https://vercel.com/home" target="_blank">
           Try our hosting provider Vercel
@@ -1555,11 +1555,11 @@ int main() {
       </Grid>
 
       <Grid>
-        <ActionListItem icon={`⭢`} href="https://internet.dev" target="_blank">
-          Hire our studio to build your applications
+        <ActionListItem icon={`⭢`} href="https://c12.space" target="_blank">
+          Work with us
         </ActionListItem>
-        <ActionListItem icon={`⭢`} href="https://github.com/internet-development/www-sacred" target="_blank">
-          View the SRCL source code
+        <ActionListItem icon={`⭢`} href="https://github.com/mjohnson518/rigel" target="_blank">
+          View the source code
         </ActionListItem>
         <ActionListItem icon={`⭢`} href="https://vercel.com/home" target="_blank">
           Try our hosting provider Vercel
