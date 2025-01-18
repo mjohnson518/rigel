@@ -203,6 +203,11 @@ const DefaultActionBar: React.FC<DefaultActionBarProps> = ({ items = [] }) => {
               },
               {
                 icon: '⊹',
+                children: 'Digital Bioluminescence',
+                onClick: () => Utilities.onHandleThemeChange('theme-black-teal'),
+              },
+              {
+                icon: '⊹',
                 children: 'Operation Safe Blue',
                 onClick: () => Utilities.onHandleThemeChange('theme-blue'),
               },
@@ -210,6 +215,11 @@ const DefaultActionBar: React.FC<DefaultActionBarProps> = ({ items = [] }) => {
                 icon: '⊹',
                 children: 'Neon Green Garden',
                 onClick: () => Utilities.onHandleThemeChange('theme-green'),
+              },
+              {
+                icon: '⊹',
+                children: 'Kirkland Signature AS/400',
+                onClick: () => Utilities.onHandleThemeChange('theme-black-green'),
               },
             ],
           },

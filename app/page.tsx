@@ -3,11 +3,14 @@ import '@root/global.scss';
 import * as Constants from '@common/constants';
 import * as Utilities from '@common/utilities';
 
+// NOTE(jimmylee): This is a kitchen sink of all components.
+// When forking or remixing, you'll likely only need a few.
 import Accordion from '@components/Accordion';
 import ActionBar from '@components/ActionBar';
 import ActionButton from '@components/ActionButton';
 import ActionListItem from '@components/ActionListItem';
 import AlertBanner from '@components/AlertBanner';
+import AS400 from '@components/examples/AS400';
 import Avatar from '@components/Avatar';
 import Badge from '@components/Badge';
 import BarLoader from '@components/BarLoader';
@@ -17,11 +20,10 @@ import BlockLoader from '@components/BlockLoader';
 import Breadcrumbs from '@components/BreadCrumbs';
 import Button from '@components/Button';
 import ButtonGroup from '@components/ButtonGroup';
-import CanvasPlatformer from '@components/CanvasPlatformer';
-import CanvasSnake from '@components/CanvasSnake';
 import Card from '@components/Card';
 import CardDouble from '@components/CardDouble';
 import Checkbox from '@components/Checkbox';
+import Chessboard from '@components/Chessboard';
 import CodeBlock from '@components/CodeBlock';
 import ContentFluid from '@components/ContentFluid';
 import ComboBox from '@components/ComboBox';
@@ -31,6 +33,7 @@ import DashboardRadar from '@components/examples/DashboardRadar';
 import DebugGrid from '@components/DebugGrid';
 import DefaultActionBar from '@components/page/DefaultActionBar';
 import DefaultLayout from '@components/page/DefaultLayout';
+import Denabase from '@components/examples/Denabase';
 import Dialog from '@components/Dialog';
 import Divider from '@components/Divider';
 import Drawer from '@components/Drawer';
@@ -41,13 +44,16 @@ import Indent from '@components/Indent';
 import Input from '@components/Input';
 import IntDevLogo from '@components/svg/IntDevLogo';
 import ListItem from '@components/ListItem';
-import MatrixLoader from '@components/MatrixLoader';
 import Message from '@components/Message';
 import MessageViewer from '@components/MessageViewer';
 import MessagesInterface from '@components/examples/MessagesInterface';
 import ModalAlert from '@components/modals/ModalAlert';
+import ModalCanvasSnake from '@components/modals/ModalCanvasSnake';
+import ModalCanvasPlatformer from '@components/modals/ModalCanvasPlatformer';
+import ModalChess from '@components/modals/ModalChess';
 import ModalCreateAccount from '@components/modals/ModalCreateAccount';
 import ModalError from '@components/modals/ModalError';
+import ModalMatrixModes from '@components/modals/ModalMatrixModes';
 import ModalStack from '@components/ModalStack';
 import ModalTrigger from '@components/ModalTrigger';
 import Navigation from '@components/Navigation';
@@ -69,6 +75,8 @@ import UpdatingDataTable from '@components/examples/UpdatingDataTable';
 
 export const dynamic = 'force-static';
 
+// NOTE(jimmylee)
+// https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export async function generateMetadata({ params, searchParams }) {
   const title = Package.name;
   const description = Package.description;
@@ -115,81 +123,8 @@ export async function generateMetadata({ params, searchParams }) {
   };
 }
 
-const SAMPLE_TABLE_DATA_CHANGE_ME = [
-  ['NAME', 'SYMBOL', 'PRICE', 'HOLDINGS'],
-  ['Bat', 'BAT', '$9.01', '400'],
-  ['Bear', 'BR', '$56.78', '200'],
-  ['Camel', 'CML', '$55.67', '70'],
-  ['Cheetah', 'CHT', '$13.45', '150'],
-  ['Crab', 'CRB', '$15.67', '250'],
-  ['Deer', 'DER', '$29.99', '110'],
-  ['Dolphin', 'DLP', '$77.89', '50'],
-  ['Eagle', 'EGL', '$45.67', '90'],
-  ['Falcon', 'FLC', '$40.22', '85'],
-  ['Fox', 'FOX', '$12.34', '100'],
-  ['Frog', 'FRG', '$7.89', '400'],
-  ['Giraffe', 'GRF', '$44.56', '80'],
-  ['Hedgehog', 'HDG', '$11.23', '200'],
-  ['Horse', 'HRS', '$54.32', '70'],
-  ['Kangaroo', 'KNG', '$15.67', '120'],
-  ['Koala', 'KLA', '$22.34', '150'],
-  ['Leopard', 'LPR', '$14.56', '110'],
-  ['Lemur', 'LMR', '$11.12', '320'],
-  ['Lion', 'LION', '$67.89', '80'],
-  ['Lynx', 'LNX', '$16.78', '130'],
-  ['Mouse', 'MSE', '$5.12', '500'],
-  ['Octopus', 'OCT', '$88.90', '40'],
-  ['Otter', 'OTR', '$20.21', '180'],
-  ['Owl', 'OWL', '$19.01', '160'],
-  ['Panda', 'PND', '$78.90', '55'],
-  ['Peacock', 'PCK', '$12.34', '100'],
-  ['Penguin', 'PNG', '$33.45', '90'],
-  ['Porcupine', 'PRC', '$17.89', '140'],
-  ['Rabbit', 'RBT', '$9.10', '350'],
-  ['Raccoon', 'RCC', '$18.90', '150'],
-  ['Shark', 'SHK', '$89.01', '50'],
-  ['Snake', 'SNK', '$10.11', '300'],
-  ['Squirrel', 'SQL', '$10.12', '250'],
-  ['Tiger', 'TGR', '$34.56', '120'],
-  ['Turtle', 'TRL', '$66.78', '60'],
-  ['Whale', 'WHL', '$123.45', '30'],
-  ['Wolf', 'WLF', '$23.45', '150'],
-  ['Zebra', 'ZBR', '$65.43', '60'],
-];
-
-const LANDSCAPES = [
-  ['Sahara Desert', 'The Sahara stretches across North Africa with shifting dunes that tower above the horizon. Even in its harsh sunlight and cold nights, resilient life finds a way to endure.'],
-  ['Grand Canyon', 'Carved by the Colorado River, the Grand Canyon reveals layers of ancient rock. Its chasms echo with wind and the distant calls of raptors gliding through the afternoon sky.'],
-  ['Amazon Rainforest', 'The Amazon Rainforest teems with biodiversity under a dense green canopy. Rivers and flooded plains sustain countless species, while humid air hangs heavy with the promise of storms.'],
-  ['Rocky Mountains', 'The Rockies rise like rugged spines across the continent. Snowpack feeds rivers that carve valleys where elk graze, and fir trees cling to the slopes.'],
-  ['Gobi Desert', 'The Gobi Desert rolls out in arid sweeps across northern China and southern Mongolia. Sparse grasses and hardy camels testify to its unforgiving climate.'],
-  ['Andes Mountains', 'The Andes dominate western South America with ragged peaks and hidden valleys. Llamas graze on high plateaus, and glaciers feed the rivers far below.'],
-  ['Serengeti Plains', 'The Serengeti spreads under the African sun in rolling grasslands. Wildebeests and zebras migrate in vast herds, guided by the promise of water and fresh pasture.'],
-  ['Yosemite Valley', 'Glacial forces shaped this granite cradle in California. Towering waterfalls cascade from sheer cliffs, while giant sequoias stand in quiet strength.'],
-  ['Namib Desert', 'The Namib Desert clings to the Atlantic coast of southern Africa. Rust-red dunes shift above hidden water tables where desert elephants roam.'],
-  ['Patagonia', 'Patagonia’s windswept plains and jagged peaks stretch across Argentina and Chile. Glaciers calve into turquoise lakes, and guanacos graze on hardy grasses.'],
-  ['Swiss Alps', 'The Swiss Alps rise with sharp spires of snow and ice. Mountain chalets cling to slopes where wildflowers bloom each summer in vibrant displays.'],
-  ['Himalayas', 'The Himalayas hold the world’s highest summits beneath a freezing sky. From lush foothills to lofty glaciers, this range tests life’s resilience.'],
-  ['Icelandic Highlands', 'Iceland’s interior stands stark and raw with volcanic plains, steaming vents, and glacier-fed rivers. The wind sweeps across moss-coated lava fields in lonely gusts.'],
-  ['Atacama Desert', 'The Atacama is among the driest places on Earth. Its scorched soil and salt flats see rare blooms that burst into color after elusive rains.'],
-  ['Redwood Forest', 'Coastal redwoods tower in perpetual mist along the Pacific. Their trunks, thick and ancient, cradle a hidden world of fern and moss.'],
-  ['Scottish Highlands', 'The Highlands roll in rugged hills capped by heather and stone. Lochs reflect ever-shifting skies, and the wind carries the distant clang of sheep bells.'],
-  ['Great Rift Valley', 'This massive geological trench cleaves eastern Africa, where lakes shimmer at the bottom of steep escarpments. Flamingos gather in vast flocks to feed on algae.'],
-  ['Okavango Delta', 'The Okavango spreads like a bright labyrinth of channels and wetlands in Botswana. Seasonal floods create a green haven for elephants, lions, and hippos.'],
-  ['Appalachian Mountains', 'Old and eroded, the Appalachians meander through eastern North America. Their forests host black bears, rhododendrons, and the misty quiet of forest hollows.'],
-  ['Death Valley', 'Death Valley bakes under a relentless sun, reaching some of the hottest temperatures on record. Cracked salt flats testify to evaporated lakes and lost water.'],
-  ['Dolomites', 'Jagged limestone peaks define northern Italy’s Dolomites. Alpine meadows lie below sheer cliffs, where climbers test themselves against silent stone.'],
-  ['Torres del Paine', 'Chile’s Torres del Paine juts into the southern sky with glacier-fed lakes at its base. Guanacos roam windblown plains as ice cracks overhead.'],
-  ['Lofoten Islands', 'Lofoten’s dramatic peaks rise straight from Norway’s cold seas. Fishing villages huddle along rocky shores, while gulls circle overhead in crisp air.'],
-  ['Siberian Tundra', 'The Siberian tundra spans a realm of permafrost and low shrubs. Winters stretch long and bleak, yet migratory birds still find respite here each summer.'],
-  ['Norwegian Fjords', 'Deep fjords carve into Norway’s coast where dark waters mirror towering cliffs. Small farms cling to green patches between rock and sea.'],
-  ['Bungle Bungle Range', 'These striped sandstone domes rise from the Australian outback. Gorges cut deep under a harsh sun, hiding pockets of lush vegetation.'],
-  ['Zion Canyon', 'Zion Canyon glows red and orange under the Utah sky. The Virgin River sculpts sheer walls that watch over narrow trails and hidden pools.'],
-  ['Lake Baikal', 'Lake Baikal in Siberia is the world’s deepest lake. Its waters shimmer with unmatched clarity, home to species found nowhere else on Earth.'],
-  ['Banff National Park', 'Banff crowns the Canadian Rockies with turquoise lakes and towering peaks. Grizzlies roam pine forests while glacier-fed rivers reflect untouched wilderness.'],
-  ['Wadi Rum', 'Wadi Rum’s sandstone cliffs loom in Jordan’s desert, carved by millennia of wind and time. Nomadic tribes wander under a silent, star-filled sky.'],
-  ['Cappadocia', 'Cappadocia’s whimsical rock formations rise over central Turkey’s plains. Soft stone spires hold hidden chapels and the ghosts of ancient dwellers.'],
-];
+// NOTE(jimmylee)
+// https://nextjs.org/docs/pages/building-your-application/routing/pages-and-layouts
 export default async function Page(props) {
   return (
     <DefaultLayout previewPixelSRC="https://intdev-global.s3.us-west-2.amazonaws.com/template-app-icon.png">
@@ -238,6 +173,7 @@ export default async function Page(props) {
               ]}
             />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="ACCORDION">
@@ -245,10 +181,11 @@ export default async function Page(props) {
           <br />
           <br />
           <Card title="EXAMPLE">
-            <Accordion defaultValue={true} title="ACCORDION EXAMPLE">
+            <Accordion defaultValue={false} title="ACCORDION EXAMPLE">
               There are two visions of America a half century from now. One is of a society more divided between the haves and the have-nots, a country in which the rich live in gated communities, send their children to expensive schools, and have access to first-rate medical care. Meanwhile, the rest live in a world marked by insecurity, at best mediocre education, and in effect rationed health care―they hope and pray they don't get seriously sick. At the bottom are millions of young people alienated and without hope. I have seen that picture in many developing countries; economists have given it a name, a dual economy, two societies living side by side, but hardly knowing each other, hardly imagining what life is like for the other. Whether we will fall to the depths of some countries, where the gates grow higher and the societies split farther and farther apart, I do not know. It is, however, the nightmare towards which we are slowly marching.
             </Accordion>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="ACTION BUTTONS">
@@ -260,6 +197,7 @@ export default async function Page(props) {
             <br />
             <ActionButton hotkey={<BlockLoader mode={9} />}>Loading</ActionButton>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="ACTION LIST">
@@ -278,6 +216,7 @@ export default async function Page(props) {
               Visit the studio website
             </ActionListItem>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="ALERT BANNER">
@@ -287,6 +226,15 @@ export default async function Page(props) {
           <Card title="EXAMPLE">
             <AlertBanner>When things reach the extreme, they alternate to the opposite.</AlertBanner>
           </Card>
+          <br />
+        </Accordion>
+
+        <Accordion defaultValue={true} title="APPLICATION SYSTEM/400 EXAMPLE">
+          The Application System 400 (AS/400) is a line of servers and network adapters from IBM that was designed to help businesses manage their data, applications, and systems infrastructure. This usage example is a tribute to the interfaces those servers had.
+          <br />
+          <br />
+          <AS400 />
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="AVATARS">
@@ -345,6 +293,7 @@ export default async function Page(props) {
               </Indent>
             </Avatar>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BADGES">
@@ -354,6 +303,7 @@ export default async function Page(props) {
           <Card title="EXAMPLE">
             <Badge>Example</Badge>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BAR LOADER">
@@ -366,6 +316,7 @@ export default async function Page(props) {
             <BarLoader progress={50} />
             <BarLoader progress={100} />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BLOCK LOADER">
@@ -397,6 +348,7 @@ export default async function Page(props) {
             <br />
             <BlockLoader mode={11} />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BLOG POST">
@@ -454,6 +406,7 @@ export default async function Page(props) {
             <br />
             When we understand what order is, I believe we shall better understand what matter is and then what the universe itself is.
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BREADCRUMBS">
@@ -522,6 +475,7 @@ export default async function Page(props) {
               ]}
             />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BUTTONS">
@@ -535,6 +489,7 @@ export default async function Page(props) {
             <br />
             <Button isDisabled>Disabled Button</Button>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="BUTTON GROUP">
@@ -545,24 +500,7 @@ export default async function Page(props) {
             <ButtonGroup items={[{ body: '16 PX', selected: true }, { body: '32 PX' }, { body: '42 PX' }]} />
             <ButtonGroup isFull items={[{ body: '16 PX', selected: true }, { body: '32 PX' }, { body: '42 PX' }]} />
           </Card>
-        </Accordion>
-
-        <Accordion defaultValue={false} title="CANVAS PLATFORMER">
-          This canvas component provides a basic starting point for building a 2D platform game directly on a canvas element. It currently supports simple character jumping and rudimentary collision detection, making it easy to set up a foundational scene.
           <br />
-          <br />
-          <Card title="EXAMPLE">
-            <CanvasPlatformer rows={12} />
-          </Card>
-        </Accordion>
-
-        <Accordion defaultValue={false} title="CANVAS SNAKE">
-          This canvas component provides a simple demo of the classic Snake game. It includes basic mechanics like movement and growth, while also demonstrating how to freeze the game state when the canvas loses focus, ensuring a smooth user experience.
-          <br />
-          <br />
-          <Card title="EXAMPLE">
-            <CanvasSnake rows={12} />
-          </Card>
         </Accordion>
 
         <Accordion defaultValue={true} title="CARDS">
@@ -574,16 +512,19 @@ export default async function Page(props) {
               <Card title="C">To seek the timeless way we must first know the quality without a name. There is a central quality which is the root criterion of life and spirit in a man, a town, a building, or a wilderness. This quality is objective and precise, but it cannot be named.</Card>
             </Card>
           </Card>
+          <br />
           <CardDouble title="Left-A" mode="left">
             <CardDouble title="Right-B" mode="right">
               <CardDouble title="C">The structure of life I have described in buildings - the structure which I believe to be objective - is deeply and inextricably connected with the human person, and with the innermost nature of human feeling.</CardDouble>
             </CardDouble>
           </CardDouble>
+          <br />
           <Card title="Left-A" mode="left">
             <CardDouble title="Right-B" mode="right">
               <Card title="C">We are searching for some kind of harmony between two intangibles: a form which we have not yet designed and a context which we cannot properly describe.</Card>
             </CardDouble>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="CHECKBOX">
@@ -617,6 +558,41 @@ export default async function Page(props) {
             <Checkbox name="24">Grow accustomed to the weight of pressure, for in such a forge is the finest steel tempered.</Checkbox>
             <Checkbox name="25">Thus do we press onward—undaunted and unyielding—in pursuit of a better physical and digital world.</Checkbox>
           </Card>
+          <br />
+        </Accordion>
+
+        <Accordion defaultValue={true} title="CHESSBOARD">
+          A minimal 8×8 component that maps alphanumeric piece identifiers to Unicode chess symbols, uses alternating squares, and includes labeled rows and columns. Simply provide an 8×8 array of piece codes or empty strings for blank squares. Perfect for rendering classic chess scenes.
+          <br />
+          <br />
+          <Card title="DEFAULT">
+            <Chessboard board={Constants.CHESSBOARD_DEFAULT_POSITIONS} />
+          </Card>
+          <br />
+          <Accordion defaultValue={true} title="BAD BISHOP">
+            The “Bad Bishop” describes a bishop locked on squares of its own color by its own pawns, stifling its mobility. In this example from chess.com, Black’s bishop on B-7 is hindered by its own pawns and cannot be freed easily. Coincidentally, Bad Bishop is also one of the best Seattle bars (704 1st Ave), it is known for its creative cocktails and lively atmosphere.
+            <br />
+            <br />
+            <Card title="BAD BISHOP">
+              <Chessboard board={Constants.CHESSBOARD_BAD_BISHOP} />
+            </Card>
+            <br />
+          </Accordion>
+          <Accordion defaultValue={true} title="CHECKMATE">
+            In chess, the en passant rule allows a pawn to capture an enemy pawn that has just made a two-square advance, moving to the square it bypassed as if it had only advanced one square. This unique rule prevents a pawn from escaping capture by skipping past an opponent. In the scenario below, White uses en passant to deliver checkmate, leaving Black’s king with no legal moves.
+            <br />
+            <br />
+            <Card title="EN PASSANT">
+              <Row style={{ whiteSpace: 'nowrap' }}>
+                <Chessboard board={Constants.CHESSBOARD_CHECKMATE_STEP_ONE} />
+                &nbsp;
+                <Chessboard board={Constants.CHESSBOARD_CHECKMATE_STEP_TWO} />
+                &nbsp;
+                <Chessboard board={Constants.CHESSBOARD_CHECKMATE_STEP_THREE} />
+              </Row>
+            </Card>
+          </Accordion>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="CODE BLOCKS">
@@ -662,6 +638,7 @@ int main() {
 }`}
             </CodeBlock>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="COMBOBOX">
@@ -669,8 +646,9 @@ int main() {
           <br />
           <br />
           <Card title="COMBOBOX">
-            <ComboBox data={LANDSCAPES} label="SEARCH THE WORLD" />
+            <ComboBox data={Constants.LANDSCAPES} label="SEARCH THE WORLD" />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DATA TABLE">
@@ -678,11 +656,12 @@ int main() {
           <br />
           <br />
           <Card title="STATIC">
-            <DataTable data={SAMPLE_TABLE_DATA_CHANGE_ME} />
+            <DataTable data={Constants.SAMPLE_TABLE_DATA_CHANGE_ME} />
           </Card>
           <Card title="UPDATING">
-            <UpdatingDataTable data={SAMPLE_TABLE_DATA_CHANGE_ME} />
+            <UpdatingDataTable data={Constants.SAMPLE_TABLE_DATA_CHANGE_ME} />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DATE PICKER">
@@ -695,6 +674,7 @@ int main() {
             <br />
             <DatePicker year={2024} month={12} />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DASHBOARD RADAR EXAMPLE">
@@ -704,8 +684,19 @@ int main() {
           <br />
           <br />
           <Card>
-            <DashboardRadar />
+            <Row style={{ whiteSpace: 'nowrap', minWidth: '70ch' }}>
+              <DashboardRadar />
+            </Row>
           </Card>
+          <br />
+        </Accordion>
+
+        <Accordion defaultValue={true} title="DENABASE EXAMPLE">
+          The Denabase component is a tribute to the work of Territory Studio in the movie Blade Runner 2049. It draws inspiration from a DNA database containing an archive of individual DNA cards. They explored various card systems to capture a sense of physicality.
+          <br />
+          <br />
+          <Denabase />
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DIALOG">
@@ -730,6 +721,7 @@ int main() {
             <br />
             <br />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DIVIDER">
@@ -763,6 +755,7 @@ int main() {
             <Divider type="GRADIENT" />
             <br />— Zack Savitzky
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DRAWER">
@@ -791,6 +784,7 @@ int main() {
               </ContentFluid>
             </RowSpaceBetween>
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="DROPDOWN MENU">
@@ -877,6 +871,7 @@ int main() {
               </DropdownMenuTrigger>
             </RowSpaceBetween>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="EMPTY STATE">
@@ -886,6 +881,7 @@ int main() {
           <Card title="EXAMPLE">
             <Grid>WORK IN PROGRESS</Grid>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="INPUT">
@@ -904,6 +900,7 @@ int main() {
             <Input autoComplete="off" caretChars="⌫ ERROR" isBlink={false} label="CUSTOM CARET TEXT" name="input_test_single_caret" />
             <Input autoComplete="off" caretChars={<BlockLoader mode={6} />} isBlink={false} label="CUSTOM CARET LOADER" name="input_test_single_caret" />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="FORM">
@@ -932,6 +929,7 @@ int main() {
             <br />
             <Button>Create an account</Button>
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="LINK">
@@ -984,6 +982,7 @@ int main() {
               </ol>
             </ol>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="LIST">
@@ -1025,6 +1024,7 @@ int main() {
               <ListItem>Six Secret Teachings</ListItem>
             </ul>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="MESSAGES">
@@ -1039,6 +1039,7 @@ int main() {
             <MessageViewer>I guess, yeah.</MessageViewer>
             <Message>So how did we end up here?</Message>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="MESSAGES INTERFACE">
@@ -1048,18 +1049,7 @@ int main() {
           <Card title="MESSAGES">
             <MessagesInterface />
           </Card>
-        </Accordion>
-
-        <Accordion defaultValue={false} title="MATRIX LOADER">
-          A Matrix Loader (screen) is a visual element that simulates the iconic green, cascading code streams featured in the Matrix films. These screens often serve as dynamic backdrops, thematic treatments, or stylized representations of complex digital data. This version fits SRCL's theming and monospace font usage.
           <br />
-          <br />
-          <Card title="KATAKANA DEFAULT">
-            <MatrixLoader rows={32} mode="katakana" />
-          </Card>
-          <Card title="GREEK LTR">
-            <MatrixLoader direction="left-to-right" rows={8} mode="greek" />
-          </Card>
         </Accordion>
 
         <Accordion defaultValue={true} title="MODAL">
@@ -1067,6 +1057,53 @@ int main() {
           <br />
           <br />
           <Card title="EXAMPLE">
+            <ModalTrigger
+              modal={ModalCanvasSnake}
+              modalProps={{
+                buttonText: 'GAME OVER',
+              }}
+            >
+              <ActionButton>Render Canvas Snake</ActionButton>
+            </ModalTrigger>
+
+            <ModalTrigger
+              modal={ModalCanvasPlatformer}
+              modalProps={{
+                buttonText: 'GAME OVER',
+              }}
+            >
+              <ActionButton>Render Canvas Platformer</ActionButton>
+            </ModalTrigger>
+
+            <ModalTrigger
+              modal={ModalMatrixModes}
+              modalProps={{
+                buttonText: 'CLOSE',
+              }}
+            >
+              <ActionButton>Render Modal Matrix Modes</ActionButton>
+            </ModalTrigger>
+
+            <ModalTrigger
+              modal={ModalChess}
+              modalProps={{
+                board: [
+                  ['r', '', '', 'q', '', 'b', '', 'r'],
+                  ['p', 'p', 'p', 'b', 'k', ' ', ' ', 'p'],
+                  ['', '', '', 'p', '', '', 'B', ''],
+                  ['', '', '', 'P', 'p', '', 'B', ''],
+                  ['', '', 'P', '', '', '', '', ''],
+                  ['', '', '', '', '', '', '', 'P'],
+                  ['P', 'P', ' ', ' ', ' ', 'P', 'P', ''],
+                  ['R', ' ', ' ', ' ', 'K', '', '', 'R'],
+                ],
+                buttonText: 'CONCEDE',
+                title: `CHECKMATE`,
+              }}
+            >
+              <ActionButton>Render Modal Checkmate</ActionButton>
+            </ModalTrigger>
+
             <ModalTrigger
               modal={ModalAlert}
               modalProps={{
@@ -1135,6 +1172,7 @@ int main() {
               <ActionButton>Error C</ActionButton>
             </ModalTrigger>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="NAVIGATION BAR">
@@ -1199,6 +1237,7 @@ int main() {
               The human brain likes anything that entails a great amount of information. Its excessive capacity waits eagerly to perceive the world by completely exhausting its great receptive powers. That potential power, though, remains today in a state of extreme constriction and is a source of the information stress we're all under.
             </Accordion>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="POPOVER">
@@ -1231,6 +1270,7 @@ int main() {
               </HoverComponentTrigger>
             </RowSpaceBetween>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="PROGRESS BARS">
@@ -1262,6 +1302,7 @@ int main() {
               <BarProgress progress={100} />
             </Card>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="RADIO BUTTONS">
@@ -1307,6 +1348,7 @@ int main() {
               ]}
             />
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="SELECT">
@@ -1324,6 +1366,7 @@ int main() {
             <br />
             <Select name="favorite_deepsea_animal" options={['Giant Squid', 'Vampire Squid', 'Anglerfish', 'Goblin Shark', 'Fangtooth Fish', 'Dumbo Octopus', 'Frilled Shark', 'Blobfish', 'Barreleye Fish', 'Lanternfish', 'Viperfish', 'Gulper Eel', 'Sea Spider', 'Dragonfish', 'Cookiecutter Shark', 'Hagfish', 'Chimaera', 'Deep Sea Octopus', 'Sea Pig', 'Sea Cucumber']} defaultValue="Giant Squid" placeholder="Select your favorite deep sea creature..." />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="SIDEBAR LAYOUT">
@@ -1346,6 +1389,7 @@ int main() {
               “I do think the idea that basic cooking skills are a virtue, that the ability to feed yourself and a few others with proficiency should be taught to every young man and woman as a fundamental skill, should become as vital to growing up as learning to wipe one’s own ass, cross the street by oneself, or be trusted with money.”
             </SidebarLayout>
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="SLIDER">
@@ -1359,9 +1403,10 @@ int main() {
             <NumberRangeSlider defaultValue={0} min={0} max={20000} step={1} />
             <NumberRangeSlider defaultValue={0} min={0} max={100000} step={1} />
           </Card>
+          <br />
         </Accordion>
 
-        <Accordion defaultValue={true} title="Table">
+        <Accordion defaultValue={true} title="TABLE">
           A simple, declarative table component designed to streamline the creation of tables in JSX. It provides greater control over the structure and layout while evoking the aesthetics of old terminal interfaces (like MS-DOS).
           <br />
           <br />
@@ -1429,6 +1474,7 @@ int main() {
               </TableRow>
             </Table>
           </CardDouble>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="TEXT AREA">
@@ -1450,6 +1496,7 @@ int main() {
           <Card title="AUTO PLAY SLOW">
             <TextArea autoPlay="All of us who do creative work, we get into it because we have good taste. But there is this gap. For the first couple years you make stuff, it’s just not that good. It’s trying to be good, it has potential, but it’s not. But your taste, the thing that got you into the game, is still killer. And your taste is why your work disappoints you." autoPlaySpeedMS={100} isBlink />
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="TOOLTIP">
@@ -1482,6 +1529,7 @@ int main() {
               </HoverComponentTrigger>
             </RowSpaceBetween>
           </Card>
+          <br />
         </Accordion>
 
         <Accordion defaultValue={true} title="TREEVIEW">
@@ -1551,6 +1599,7 @@ int main() {
               </TreeView>
             </TreeView>
           </Card>
+          <br />
         </Accordion>
       </Grid>
 
