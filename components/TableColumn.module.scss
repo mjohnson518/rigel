@@ -5,6 +5,9 @@
   padding: 0;
   transition: background-color 0.5s ease;
   padding-left: 1ch;
+  font-size: var(--font-size);
+  flex-shrink: 0;
+  -webkit-text-size-adjust: 100%;
 
   &:first-child {
     padding-left: 0px;

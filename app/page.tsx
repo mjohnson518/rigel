@@ -131,7 +131,7 @@ export default async function Page(props) {
       <br />
       <Grid>
         <Row>
-          {Package.name.toUpperCase()} <Badge>Version {Package.version}</Badge>
+          {Package.name.toUpperCase()} <Badge>{Package.version}</Badge>
         </Row>
         <Row>{Package.description}</Row>
       </Grid>
@@ -1537,7 +1537,7 @@ int main() {
           <br />
           <br />
           <Card title="FILE SYSTEM">
-            <TreeView defaultValue={true} isRoot title="Animal Kingdom">
+            <TreeView defaultValue={true} isRoot title="Animal Kingdom" style={{ minWidth: '71ch' }}>
               <TreeView defaultValue={true} title="Chordata">
                 <TreeView defaultValue={true} title="Mammalia">
                   <TreeView defaultValue={true} title="Primates">

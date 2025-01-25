@@ -5,6 +5,6 @@
   transition: 200ms ease background;
 
   &:focus {
-     background: var(--theme-focused-foreground);
+    background: var(--theme-focused-foreground);
   }
 }
